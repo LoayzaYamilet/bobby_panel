@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cliente', function (Blueprint $table) {
-            $table->string('dni_ruc', 11)->primary();
+        Schema::create('clientes', function (Blueprint $table) {
+            $table->string('dniruc', 11)->primary();
             $table->string('nombre',100);
             $table->string('telefono',9);
             $table->timestamps();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cliente');
+        Schema::dropIfExists('clientes');
     }
 };

@@ -13,14 +13,14 @@ class VehiculoController extends Controller
 
     public function index()
     {
-        $vehiculo = Vehiculo::select('vehiculo.placa','vehiculo.marca',
-        'color','kilometraje','cliente_dni_ruc','cliente.nombre as cliente')
-        ->join('cliente','cliente_dni_ruc','=','vehiculo.cliente_dni_ruc')
+        $vehiculos = Vehiculo::select('vehiculos.placa','vehiculos.marca',
+        'color','kilometraje','cliente_dniruc','clientes.nombre as cliente')
+        ->join('clientes','clientes.dniruc','=','vehiculos.cliente_dniruc')
         ->paginate(10);
 
-        $cliente = Cliente::all();
-        return Inertia::render('Vehiculo/Index',['vehiculo'=> $vehiculo,
-        'cliente' => $cliente]);
+        $clientes = Cliente::all();
+        return Inertia::render('Vehiculos/Index',['vehiculos'=> $vehiculos,
+        'clientes' => $clientes]);
     }
 
     public function create()
@@ -36,12 +36,12 @@ class VehiculoController extends Controller
             'marca' => 'required|max:100',
             'color' => 'required|max:50',
             'kilometraje' => 'required|max:10, 10',
-            'cliente_dni_ruc' => 'required|numeric'
+            'cliente_dniruc' => 'required|numeric'
         ]);
 
         $vehiculo = new Vehiculo($request->input());
         $vehiculo->save();
-        return redirect('vehiculo');
+        return redirect('vehiculos');
     }
 
     /**
@@ -66,31 +66,31 @@ class VehiculoController extends Controller
             'marca' => 'required|max:100',
             'color' => 'required|max:50',
             'kilometraje' => 'required|max:10, 2',
-            'cliente_dni_ruc' => 'required|numeric'
+            'cliente_dniruc' => 'required|numeric'
         ]);
         $vehiculo->update($request->input());
-        return redirect('vehiculo');
+        return redirect('vehiculos');
     }
 
     public function destroy(Vehiculo $vehiculo)
     {
         $vehiculo->delete();
-        return redirect('vehiculo');
+        return redirect('vehiculos');
     }
     public function VehiculoByCliente(){
-        $data = Vehiculo::select(DB::raw('count(vehiculo.placa) as count, cliente.nombre'))
-        ->join('cliente','cliente.dni_ruc','=','vehiculo.cliente_dni_ruc')
-        ->groupBy('cliente.name')->get();
-        return Inertia::render('Vehiculo/Graphic',['data' => $data]);
+        $data = Vehiculo::select(DB::raw('count(vehiculos.placa) as count, clientes.nombre'))
+        ->join('clientes','clientes.dniruc','=','vehiculos.cliente_dniruc')
+        ->groupBy('clientes.name')->get();
+        return Inertia::render('Vehiculos/Graphic',['data' => $data]);
     }
     public function reports(){
-        $vehiculo = Vehiculo::select('vehiculo.placa','vehiculo.marca',
-        'color','kilometraje','cliente_dni_ruc','cliente.nombre as cliente')
-        ->join('cliente','cliente_dni_ruc','=','vehiculo.cliente_dni_ruc')
+        $vehiculos = Vehiculo::select('vehiculos.placa','vehiculos.marca',
+        'color','kilometraje','cliente_dniruc','clientes.nombre as cliente')
+        ->join('clientes','clientes.dniruc','=','vehiculos.cliente_dniruc')
         ->get();
 
-        $cliente = Cliente::all();
-        return Inertia::render('Vehiculo/Index',['vehiculo'=> $vehiculo,
-        'cliente' => $cliente]);
+        $clientes = Cliente::all();
+        return Inertia::render('Vehiculos/Index',['vehiculos'=> $vehiculos,
+        'clientes' => $clientes]);
     }
 }

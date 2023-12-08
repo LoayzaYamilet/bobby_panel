@@ -9,5 +9,5 @@ use Illuminate\Database\Eloquent\Model;
 class Vehiculo extends Model
 {
     use HasFactory;
-    protected $fillable = ['placa','cliente_dni_ruc','marca','color','kilometraje'];
+    protected $fillable = ['placa','cliente_dniruc','marca','color','kilometraje'];
 }

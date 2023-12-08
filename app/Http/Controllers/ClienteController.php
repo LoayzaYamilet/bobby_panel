@@ -11,25 +11,25 @@ class ClienteController extends Controller
 
     public function index()
     {
-        $cliente = Cliente::all();
-        return Inertia::render('Cliente/Index',['cliente' => $cliente]);
+        $clientes = Cliente::all();
+        return Inertia::render('Clientes/Index',['clientes' => $clientes]);
     }
 
 
     public function create()
     {
-        return Inertia::render('Cliente/Create');
+        return Inertia::render('Clientes/Create');
     }
 
 
     public function store(Request $request)
     {
-        $request->validate(['dni_ruc'=>'required|max:11']);
+        $request->validate(['dniruc'=>'required|max:11']);
         $request->validate(['nombre'=>'required|max:100']);
         $request->validate(['telefono'=>'required|max:100']);
         $cliente = new Cliente($request->input());
         $cliente->save();
-        return redirect('cliente');
+        return redirect('clientes');
 
     }
 
@@ -41,21 +41,21 @@ class ClienteController extends Controller
 
     public function edit(Cliente $cliente)
     {
-        return Inertia::render('Cliente/Edit',['cliente' => $cliente]);
+        return Inertia::render('Clientes/Edit',['cliente' => $cliente]);
     }
 
     public function update(Request $request, Cliente $cliente)
     {
-        $request->validate(['dni_ruc'=>'required|max:11']);
+        $request->validate(['dniruc'=>'required|max:11']);
         $request->validate(['nombre'=>'required|max:100']);
         $request->validate(['telefono'=>'required|max:100']);
         $cliente->update($request->all());
-        return redirect('cliente');
+        return redirect('clientes');
     }
 
     public function destroy(Cliente $cliente)
     {
         $cliente->delete();
-        return redirect('cliente');
+        return redirect('clientes');
     }
 }
