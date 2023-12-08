@@ -3,6 +3,10 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\VehiculoController;
+use App\Models\Cliente;
+use App\Models\Vehiculo;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('cliente', ClienteController::class);
+    Route::resource('vehiculo', VehiculoController::class);
+    Route::get('graphic',[VehiculoController::class,'VehiculoByCliente'])->name('graphic');
+    Route::get('reports',[VehiculoController::class,'reports'])->name('reports');
 });
 
 require __DIR__.'/auth.php';
